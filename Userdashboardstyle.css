@@ -1,0 +1,97 @@
+body {
+  background-color: #b1a355;
+  display: flex;
+  background-image: url(https://scontent.fmnl17-1.fna.fbcdn.net/v/t39.30808-6/484345604_122193439202100636_8837221810732803812_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeHcA-UncYOep8B1uBknpLyerNmv_W_0CFys2a_9b_QIXO9a2noL70F-L_0L-PAQb58jgTYtasqbmtD6A9gRXSeq&_nc_ohc=Kz2iIdnpQrYQ7kNvwEjRyrG&_nc_oc=AdmmsCdFwyMfe9Y8HsRlruJVgZ8kln2ZbGJ366kWPTcfWAk9XUNIwG2bCBxx4lBydC0&_nc_zt=23&_nc_ht=scontent.fmnl17-1.fna&_nc_gid=zeiFbqT4yOABLD3sGvoh0w&oh=00_AfOxt-pfPy8-J01VVkoGZlL6-DY8Qto5ZsJJ4oeQApXGvg&oe=68501DF8);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 80vh;
+  width: 50%;
+  padding: 5px;
+  font-family: "Poppins", sans-serif;
+}
+
+.dashboard-container {
+  display: flex;
+  width: 100vw;
+  min-height: 100vh;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #ffd700;
+  color: #fff;  
+  padding: 25px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar h2 {
+  font-size: 22px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.sidebar a {
+  color: #fff;
+  text-decoration: none;
+  margin: 12px 0;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 30px;
+  background: #fff;
+}
+
+.main-content h1 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+/* Cards */
+.card {
+  background: #f3f3f3;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.logout-btn {
+  margin-top: 30px;
+  color: #444;
+  font-weight: 600;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.logout-btn:hover {
+  background: #eee;
+}
