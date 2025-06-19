@@ -3,630 +3,289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Admindbstyle.css">
-    <title>Admin</title>
+    <title>Admin Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="Admindbstyle.css">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body>
-    
-<!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="p-4 border-b border-gray-700">
-            <h2 class="text-xl font-bold text-white">Admin Dashboard</h2>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="https://scontent.fmnl4-1.fna.fbcdn.net/v/t39.30808-6/471162732_122180547374100636_2607041914606744030_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeE6D1imUD2siVS-_HczZUm6XyMjWvLJLwBfIyNa8skvAN4rZw09nYlusAp1WnbrvmBNVIlbTg0MKLJMEo2GzUtY&_nc_ohc=asMhda-F_WoQ7kNvwFMoe1R&_nc_oc=Adn5-Wp3paBMpEPhC96hlKdLOch1_4YDZgdtqUWPlu4ev5JVoN6IYF8qsc9FZjDmAbc&_nc_zt=23&_nc_ht=scontent.fmnl4-1.fna&_nc_gid=6z8avOW5v3FQINpTFGc2cw&oh=00_AfOc3G9gDT0k_xw02h0EdyDltuOyGVScayspH1ATlurXcg&oe=685984C4" alt="Logo" class="sidebar-logo">
+            <h2>ADMIN</h2>
         </div>
-        <div class="p-4">
-            <div class="mb-6">
-                <h3 class="text-xs uppercase font-semibold text-gray-400 mb-2">Main</h3>
-                <a href="#" class="nav-link active">
-                    <i class="fas fa-chart-line"></i>
-                    <span>Dashboard</span>
-                </a>
-                <a href="#" class="nav-link">
-                    <i class="fas fa-database"></i>
-                    <span>Database</span>
-                </a>
-            </div>
-            <div class="mb-6">
-                <h3 class="text-xs uppercase font-semibold text-gray-400 mb-2">Content</h3>
-                <a href="#" class="nav-link">
-                    <i class="fas fa-users"></i>
-                    <span>Users</span>
-                </a>
-                <a href="#" class="nav-link">
-                    <i class="fas fa-boxes"></i>
-                    <span>Products</span>
-                </a>
-                <a href="#" class="nav-link">
-                    <i class="fas fa-receipt"></i>
-                    <span>Orders</span>
-                </a>
-            </div>
-        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#" class="active" id="logins-tab"><i class="fas fa-user-shield"></i> Logins</a></li>
+            <li><a href="#" id="logsheets-tab"><i class="fas fa-clipboard-list"></i> Logsheets</a></li>
+            <li><a href="#" id="masterlist-tab"><i class="fas fa-list-ol"></i> Masterlist</a></li>
+            <li><a href="#" id="training-tab"><i class="fas fa-graduation-cap"></i> Special Training</a></li>
+            <li><a href="#" id="products-tab"><i class="fas fa-box-open"></i> Products</a></li>
+        </ul>
     </div>
 
-    <!-- Main Content -->
+    <!-- Main Content Area -->
     <div class="main-content">
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Database Management</h1>
-            <button class="btn btn-primary" id="toggle-connection">
-                <i class="fas fa-plug mr-2"></i>
-                <span id="connection-text">Connect to Database</span>
+        <div class="content-header">
+            <h1 class="content-title">User Logins</h1>
+            <button class="add-btn" id="add-user-btn">
+                <i class="fas fa-plus"></i> Add New User
             </button>
         </div>
 
-        <!-- Connection Panel -->
-        <div class="card mb-6" id="connection-panel" style="display: none;">
-            <h2 class="text-lg font-semibold mb-4">Database Connection</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="form-group">
-                    <label class="form-label" for="db-host">Host</label>
-                    <input type="text" id="db-host" class="form-control" placeholder="localhost">
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="db-port">Port</label>
-                    <input type="text" id="db-port" class="form-control" placeholder="3306">
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="db-username">Username</label>
-                    <input type="text" id="db-username" class="form-control" placeholder="root">
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="db-password">Password</label>
-                    <input type="password" id="db-password" class="form-control" placeholder="password">
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="db-name">Database Name</label>
-                    <input type="text" id="db-name" class="form-control" placeholder="my_database">
-                </div>
-                <div class="form-group flex items-end">
-                    <button class="btn btn-primary w-full" id="test-connection">
-                        <i class="fas fa-bolt mr-2"></i>
-                        Test Connection
-                    </button>
-                </div>
-            </div>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search users...">
+            <button id="search-btn"><i class="fas fa-search"></i></button>
         </div>
 
-        <!-- Status Bar -->
-        <div class="flex items-center mb-6">
-            <div class="connection-status disconnected mr-4" id="connection-status">
-                <i class="fas fa-exclamation-circle"></i>
-                <span>Disconnected</span>
-            </div>
-            <div class="flex-1"></div>
-            <button class="btn btn-primary" id="add-record">
-                <i class="fas fa-plus mr-2"></i>
-                Add Record
-            </button>
-        </div>
-
-        <!-- Database Table -->
-        <div class="card overflow-x-auto">
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Created At</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="data-table-body">
-                    <!-- Records will be inserted here -->
-                </tbody>
-            </table>
-        </div>
-
-        <div class="flex justify-between items-center mt-4">
-            <div class="text-sm text-gray-600">
-                Showing <span id="start-record">1</span> to <span id="end-record">5</span> of <span id="total-records">10</span> records
-            </div>
-            <div class="flex space-x-2">
-                <button class="btn" id="prev-page" disabled>
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="btn" id="next-page">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+        <div class="card">
+            <div class="table-responsive">
+                <table id="users-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table-body">
+                        <!-- User data will be loaded here -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 
-    <!-- Add/Edit Modal -->
-    <div class="modal" id="record-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="text-lg font-semibold" id="modal-title">Add New Record</h3>
-                <button class="text-gray-400 hover:text-gray-500" id="close-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="record-form">
-                    <div class="grid grid-cols-1 gap-4">
-                        <div class="form-group">
-                            <label class="form-label" for="edit-name">Name</label>
-                            <input type="text" id="edit-name" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="edit-email">Email</label>
-                            <input type="email" id="edit-email" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="edit-role">Role</label>
-                            <select id="edit-role" class="form-control" required>
-                                <option value="admin">Admin</option>
-                                <option value="editor">Editor</option>
-                                <option value="viewer">Viewer</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="edit-status">Status</label>
-                            <select id="edit-status" class="form-control" required>
-                                <option value="active">Active</option>
-                                <option value="inactive">Inactive</option>
-                                <option value="suspended">Suspended</option>
-                            </select>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn mr-2" id="cancel-modal">
-                    Cancel
-                </button>
-                <button class="btn btn-primary" id="save-record">
-                    Save
-                </button>
-            </div>
+    <!-- User Modal (Hidden by default) -->
+    <div id="user-modal" class="modal" style="display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
+        <div class="modal-content" style="background-color: #fff; margin: 10% auto; padding: 20px; border-radius: 8px; width: 400px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <span class="close-btn" style="float: right; font-size: 24px; cursor: pointer;">&times;</span>
+            <h2 style="margin-top: 0;" id="modal-title">Add New User</h2>
+            <form id="user-form">
+                <input type="hidden" id="user-id">
+                <div style="margin-bottom: 15px;">
+                    <label for="full-name" style="display: block; margin-bottom: 5px; font-weight: 500;">Full Name</label>
+                    <input type="text" id="full-name" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label for="email" style="display: block; margin-bottom: 5px; font-weight: 500;">Email</label>
+                    <input type="email" id="email" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label for="password" style="display: block; margin-bottom: 5px; font-weight: 500;">Password</label>
+                    <input type="password" id="password" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 4px;">
+                </div>
+                <div style="display: flex; justify-content: flex-end;">
+                    <button type="button" id="cancel-btn" style="padding: 8px 16px; background-color: #e2e8f0; border: none; border-radius: 4px; margin-right: 10px; cursor: pointer;">Cancel</button>
+                    <button type="submit" id="save-btn" style="padding: 8px 16px; background-color: #0ea5e9; color: white; border: none; border-radius: 4px; cursor: pointer;">Save</button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <!-- Delete Confirmation Modal -->
-    <div class="modal" id="delete-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="text-lg font-semibold">Confirm Deletion</h3>
-                <button class="text-gray-400 hover:text-gray-500" id="close-delete-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to delete this record? This action cannot be undone.</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn mr-2" id="cancel-delete">
-                    Cancel
-                </button>
-                <button class="btn btn-danger" id="confirm-delete">
-                    Delete
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Notification -->
-    <div class="notification" id="notification">
-        <i class="fas fa-check-circle"></i>
-        <div id="notification-message"></div>
-    </div>
-
-    <!-- Script -->
     <script>
-        // Simulated database - in a real app, this would be replaced with actual database API calls
-        let database = {
-            connected: false,
-            records: [
-                {
-                    id: 1,
-                    name: "John Doe",
-                    email: "john@example.com",
-                    role: "admin",
-                    status: "active",
-                    created_at: "2023-05-15"
-                },
-                {
-                    id: 2,
-                    name: "Jane Smith",
-                    email: "jane@example.com",
-                    role: "editor",
-                    status: "active",
-                    created_at: "2023-06-20"
-                },
-                {
-                    id: 3,
-                    name: "Bob Johnson",
-                    email: "bob@example.com",
-                    role: "viewer",
-                    status: "inactive",
-                    created_at: "2023-07-10"
-                },
-                {
-                    id: 4,
-                    name: "Alice Brown",
-                    email: "alice@example.com",
-                    role: "editor",
-                    status: "suspended",
-                    created_at: "2023-08-05"
-                },
-                {
-                    id: 5,
-                    name: "Charlie Wilson",
-                    email: "charlie@example.com",
-                    role: "viewer",
-                    status: "active",
-                    created_at: "2023-09-12"
-                },
-                {
-                    id: 6,
-                    name: "Diana Prince",
-                    email: "diana@example.com",
-                    role: "admin",
-                    status: "active",
-                    created_at: "2023-10-18"
-                },
-                {
-                    id: 7,
-                    name: "Edward Norton",
-                    email: "edward@example.com",
-                    role: "editor",
-                    status: "inactive",
-                    created_at: "2023-11-22"
-                },
-                {
-                    id: 8,
-                    name: "Fiona Green",
-                    email: "fiona@example.com",
-                    role: "viewer",
-                    status: "active",
-                    created_at: "2023-12-05"
-                },
-                {
-                    id: 9,
-                    name: "George Harris",
-                    email: "george@example.com",
-                    role: "admin",
-                    status: "suspended",
-                    created_at: "2024-01-15"
-                },
-                {
-                    id: 10,
-                    name: "Hannah Lee",
-                    email: "hannah@example.com",
-                    role: "editor",
-                    status: "active",
-                    created_at: "2024-02-10"
-                }
-            ],
-            connectionParams: {
-                host: '',
-                port: '',
-                username: '',
-                password: '',
-                name: ''
-            }
+        // Sample user data (in a real app, this would come from MySQL database)
+        let users = [
+            { id: 1, fullName: "John Doe", email: "john@example.com", password: "password123" },
+            { id: 2, fullName: "Jane Smith", email: "jane@example.com", password: "securepass" },
+            { id: 3, fullName: "Mike Johnson", email: "mike@example.com", password: "mikepass" },
+            { id: 4, fullName: "Sarah Williams", email: "sarah@example.com", password: "sarah1234" },
+            { id: 5, fullName: "David Brown", email: "david@example.com", password: "dbrown2023" }
+        ];
+
+        // DOM elements
+        const usersTableBody = document.getElementById('users-table-body');
+        const searchInput = document.getElementById('search-input');
+        const searchBtn = document.getElementById('search-btn');
+        const addUserBtn = document.getElementById('add-user-btn');
+        const userModal = document.getElementById('user-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const userIdInput = document.getElementById('user-id');
+        const fullNameInput = document.getElementById('full-name');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const saveBtn = document.getElementById('save-btn');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const userForm = document.getElementById('user-form');
+        const closeBtn = document.querySelector('.close-btn');
+
+        // Tab elements
+        const tabs = {
+            logins: document.getElementById('logins-tab'),
+            logsheets: document.getElementById('logsheets-tab'),
+            masterlist: document.getElementById('masterlist-tab'),
+            training: document.getElementById('training-tab'),
+            products: document.getElementById('products-tab')
         };
 
-        // DOM Elements
-        const sidebar = document.getElementById('sidebar');
-        const connectionPanel = document.getElementById('connection-panel');
-        const toggleConnection = document.getElementById('toggle-connection');
-        const connectionText = document.getElementById('connection-text');
-        const connectionStatus = document.getElementById('connection-status');
-        const testConnection = document.getElementById('test-connection');
-        const addRecord = document.getElementById('add-record');
-        const dataTableBody = document.getElementById('data-table-body');
-        const prevPage = document.getElementById('prev-page');
-        const nextPage = document.getElementById('next-page');
-        const recordModal = document.getElementById('record-modal');
-        const deleteModal = document.getElementById('delete-modal');
-        const closeModal = document.getElementById('close-modal');
-        const closeDeleteModal = document.getElementById('close-delete-modal');
-        const cancelModal = document.getElementById('cancel-modal');
-        const cancelDelete = document.getElementById('cancel-delete');
-        const saveRecord = document.getElementById('save-record');
-        const confirmDelete = document.getElementById('confirm-delete');
-        const notification = document.getElementById('notification');
-        const notificationMessage = document.getElementById('notification-message');
-        const startRecord = document.getElementById('start-record');
-        const endRecord = document.getElementById('end-record');
-        const totalRecords = document.getElementById('total-records');
-        const modalTitle = document.getElementById('modal-title');
-        const recordForm = document.getElementById('record-form');
+        // Initialize the dashboard
+        function initDashboard() {
+            renderUserTable(users);
+            setupEventListeners();
+        }
 
-        // Form inputs
-        const editName = document.getElementById('edit-name');
-        const editEmail = document.getElementById('edit-email');
-        const editRole = document.getElementById('edit-role');
-        const editStatus = document.getElementById('edit-status');
-
-        // Database input fields
-        const dbHost = document.getElementById('db-host');
-        const dbPort = document.getElementById('db-port');
-        const dbUsername = document.getElementById('db-username');
-        const dbPassword = document.getElementById('db-password');
-        const dbName = document.getElementById('db-name');
-
-        // Pagination
-        let currentPage = 1;
-        const recordsPerPage = 5;
-
-        // Current record being edited/deleted
-        let currentRecordId = null;
-        let isEditing = false;
-
-        // Initialization
-        document.addEventListener('DOMContentLoaded', function() {
-            renderTable();
-            updatePagination();
-            updateConnectionStatus();
-        });
-
-        // Toggle connection panel
-        toggleConnection.addEventListener('click', function() {
-            if (database.connected) {
-                disconnectFromDatabase();
-            } else {
-                connectionPanel.style.display = connectionPanel.style.display === 'none' ? 'block' : 'none';
-            }
-        });
-
-        // Test database connection
-        testConnection.addEventListener('click', function() {
-            // Save connection parameters
-            database.connectionParams = {
-                host: dbHost.value,
-                port: dbPort.value,
-                username: dbUsername.value,
-                password: dbPassword.value,
-                name: dbName.value
-            };
-
-            // In a real app, this would be an API call to test the database connection
-            setTimeout(() => {
-                // Simulate successful connection
-                database.connected = true;
-                updateConnectionStatus();
-                connectionPanel.style.display = 'none';
-                showNotification('success', 'Database connection established successfully');
-            }, 1000);
-        });
-
-        // Add new record
-        addRecord.addEventListener('click', function() {
-            isEditing = false;
-            currentRecordId = null;
-            modalTitle.textContent = 'Add New Record';
-            recordForm.reset();
-            recordModal.classList.add('active');
-        });
-
-        // Close modal
-        closeModal.addEventListener('click', closeAllModals);
-        cancelModal.addEventListener('click', closeAllModals);
-        closeDeleteModal.addEventListener('click', closeAllModals);
-        cancelDelete.addEventListener('click', closeAllModals);
-
-        // Save record
-        saveRecord.addEventListener('click', function() {
-            if (!recordForm.checkValidity()) {
-                recordForm.reportValidity();
-                return;
-            }
-
-            const record = {
-                name: editName.value,
-                email: editEmail.value,
-                role: editRole.value,
-                status: editStatus.value,
-                created_at: new Date().toISOString().split('T')[0]
-            };
-
-            if (isEditing) {
-                // Update existing record
-                const index = database.records.findIndex(r => r.id === currentRecordId);
-                if (index !== -1) {
-                    record.id = currentRecordId;
-                    database.records[index] = record;
-                    showNotification('success', 'Record updated successfully');
-                }
-            } else {
-                // Add new record
-                record.id = database.records.length > 0 
-                    ? Math.max(...database.records.map(r => r.id)) + 1 
-                    : 1;
-                database.records.push(record);
-                showNotification('success', 'Record added successfully');
-            }
-
-            renderTable();
-            updatePagination();
-            closeAllModals();
-        });
-
-        // Confirm delete
-        confirmDelete.addEventListener('click', function() {
-            database.records = database.records.filter(r => r.id !== currentRecordId);
-            showNotification('success', 'Record deleted successfully');
-            renderTable();
-            updatePagination();
-            closeAllModals();
-        });
-
-        // Pagination
-        prevPage.addEventListener('click', function() {
-            if (currentPage > 1) {
-                currentPage--;
-                renderTable();
-                updatePagination();
-            }
-        });
-
-        nextPage.addEventListener('click', function() {
-            const totalPages = Math.ceil(database.records.length / recordsPerPage);
-            if (currentPage < totalPages) {
-                currentPage++;
-                renderTable();
-                updatePagination();
-            }
-        });
-
-        // Functions
-        function renderTable() {
-            dataTableBody.innerHTML = '';
+        // Render user table
+        function renderUserTable(usersToRender) {
+            usersTableBody.innerHTML = '';
             
-            const startIndex = (currentPage - 1) * recordsPerPage;
-            const endIndex = Math.min(startIndex + recordsPerPage, database.records.length);
-            const recordsToDisplay = database.records.slice(startIndex, endIndex);
-
-            recordsToDisplay.forEach(record => {
+            usersToRender.forEach(user => {
                 const row = document.createElement('tr');
+                
                 row.innerHTML = `
-                    <td>${record.id}</td>
-                    <td>${record.name}</td>
-                    <td>${record.email}</td>
-                    <td><span class="px-2 py-1 rounded-full text-xs ${getRoleClass(record.role)}">${record.role}</span></td>
-                    <td><span class="px-2 py-1 rounded-full text-xs ${getStatusClass(record.status)}">${record.status}</span></td>
-                    <td>${record.created_at}</td>
+                    <td>${user.id}</td>
+                    <td>${user.fullName}</td>
+                    <td>${user.email}</td>
+                    <td>${'•'.repeat(user.password.length)}</td>
                     <td>
-                        <button class="btn btn-edit btn-sm mr-2 edit-btn" data-id="${record.id}">
+                        <button class="edit-btn" data-id="${user.id}" style="background-color: #f59e0b; color: white; border: none; padding: 5px 10px; border-radius: 4px; margin-right: 5px; cursor: pointer;">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button class="btn btn-danger btn-sm delete-btn" data-id="${record.id}">
-                            <i class="fas fa-trash"></i>
+                        <button class="delete-btn" data-id="${user.id}" style="background-color: #ef4444; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+                            <i class="fas fa-trash-alt"></i>
                         </button>
                     </td>
                 `;
-                dataTableBody.appendChild(row);
+                
+                usersTableBody.appendChild(row);
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Search functionality
+            searchBtn.addEventListener('click', handleSearch);
+            searchInput.addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    handleSearch();
+                }
             });
 
-            // Add event listeners to edit and delete buttons
-            document.querySelectorAll('.edit-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const id = parseInt(this.getAttribute('data-id'));
-                    editRecord(id);
+            // Add user button
+            addUserBtn.addEventListener('click', () => {
+                openModal('add');
+            });
+
+            // Modal buttons
+            saveBtn.addEventListener('click', handleSaveUser);
+            cancelBtn.addEventListener('click', closeModal);
+            closeBtn.addEventListener('click', closeModal);
+
+            // Form submission
+            userForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleSaveUser();
+            });
+
+            // Tab navigation
+            Object.values(tabs).forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Remove active class from all tabs
+                    Object.values(tabs).forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Here you would load the appropriate content for each tab
+                    // For this demo, we're just showing the logins tab
+                    // In a real app, you would make AJAX calls or show/hide different content
+                    alert(`Loading ${this.textContent} content...`);
                 });
             });
 
-            document.querySelectorAll('.delete-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const id = parseInt(this.getAttribute('data-id'));
-                    confirmDeleteRecord(id);
-                });
+            // Delegate edit and delete button events
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('edit-btn') || e.target.closest('.edit-btn')) {
+                    const button = e.target.classList.contains('edit-btn') ? e.target : e.target.closest('.edit-btn');
+                    const id = parseInt(button.getAttribute('data-id'));
+                    openModal('edit', id);
+                }
+
+                if (e.target.classList.contains('delete-btn') || e.target.closest('.delete-btn')) {
+                    const button = e.target.classList.contains('delete-btn') ? e.target : e.target.closest('.delete-btn');
+                    const id = parseInt(button.getAttribute('data-id'));
+                    if (confirm('Are you sure you want to delete this user?')) {
+                        deleteUser(id);
+                    }
+                }
             });
         }
 
-        function editRecord(id) {
-            const record = database.records.find(r => r.id === id);
-            if (record) {
-                isEditing = true;
-                currentRecordId = id;
-                modalTitle.textContent = 'Edit Record';
-                editName.value = record.name;
-                editEmail.value = record.email;
-                editRole.value = record.role;
-                editStatus.value = record.status;
-                recordModal.classList.add('active');
+        // Handle search
+        function handleSearch() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredUsers = users.filter(user => 
+                user.fullName.toLowerCase().includes(searchTerm) || 
+                user.email.toLowerCase().includes(searchTerm)
+            );
+            renderUserTable(filteredUsers);
+        }
+
+        // Open modal for adding/editing users
+        function openModal(mode, id = null) {
+            if (mode === 'add') {
+                modalTitle.textContent = 'Add New User';
+                userIdInput.value = '';
+                fullNameInput.value = '';
+                emailInput.value = '';
+                passwordInput.value = '';
+            } else if (mode === 'edit' && id) {
+                const user = users.find(u => u.id === id);
+                if (user) {
+                    modalTitle.textContent = 'Edit User';
+                    userIdInput.value = user.id;
+                    fullNameInput.value = user.fullName;
+                    emailInput.value = user.email;
+                    passwordInput.value = user.password;
+                }
             }
+            userModal.style.display = 'block';
         }
 
-        function confirmDeleteRecord(id) {
-            currentRecordId = id;
-            deleteModal.classList.add('active');
+        // Close modal
+        function closeModal() {
+            userModal.style.display = 'none';
         }
 
-        function closeAllModals() {
-            recordModal.classList.remove('active');
-            deleteModal.classList.remove('active');
-        }
+        // Handle save user (add or edit)
+        function handleSaveUser() {
+            const id = parseInt(userIdInput.value) || 0;
+            const fullName = fullNameInput.value.trim();
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
 
-        function updatePagination() {
-            const totalPages = Math.ceil(database.records.length / recordsPerPage);
-            const startRecord = (currentPage - 1) * recordsPerPage + 1;
-            const endRecord = Math.min(currentPage * recordsPerPage, database.records.length);
+            // Basic validation
+            if (!fullName || !email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
 
-            document.getElementById('start-record').textContent = startRecord;
-            document.getElementById('end-record').textContent = endRecord;
-            document.getElementById('total-records').textContent = database.records.length;
-
-            prevPage.disabled = currentPage === 1;
-            nextPage.disabled = currentPage === totalPages;
-        }
-
-        function updateConnectionStatus() {
-            if (database.connected) {
-                connectionStatus.classList.remove('disconnected');
-                connectionStatus.classList.add('connected');
-                connectionStatus.innerHTML = '<i class="fas fa-check-circle"></i><span>Connected</span>';
-                connectionText.textContent = 'Disconnect';
-                toggleConnection.classList.remove('btn-primary');
-                toggleConnection.classList.add('btn-danger');
+            if (id) {
+                // Edit existing user
+                const index = users.findIndex(u => u.id === id);
+                if (index !== -1) {
+                    users[index] = { id, fullName, email, password };
+                }
             } else {
-                connectionStatus.classList.remove('connected');
-                connectionStatus.classList.add('disconnected');
-                connectionStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i><span>Disconnected</span>';
-                connectionText.textContent = 'Connect to Database';
-                toggleConnection.classList.remove('btn-danger');
-                toggleConnection.classList.add('btn-primary');
-            }
-        }
-
-        function disconnectFromDatabase() {
-            // In a real app, this would be an API call to disconnect
-            database.connected = false;
-            updateConnectionStatus();
-            showNotification('success', 'Disconnected from database');
-        }
-
-        function getRoleClass(role) {
-            switch (role) {
-                case 'admin': return 'bg-purple-100 text-purple-800';
-                case 'editor': return 'bg-blue-100 text-blue-800';
-                case 'viewer': return 'bg-green-100 text-green-800';
-                default: return 'bg-gray-100 text-gray-800';
-            }
-        }
-
-        function getStatusClass(status) {
-            switch (status) {
-                case 'active': return 'bg-green-100 text-green-800';
-                case 'inactive': return 'bg-yellow-100 text-yellow-800';
-                case 'suspended': return 'bg-red-100 text-red-800';
-                default: return 'bg-gray-100 text-gray-800';
-            }
-        }
-
-        function showNotification(type, message) {
-            notification.className = `notification ${type} show`;
-            notificationMessage.textContent = message;
-            
-            if (type === 'success') {
-                notification.querySelector('i').className = 'fas fa-check-circle';
-            } else {
-                notification.querySelector('i').className = 'fas fa-exclamation-circle';
+                // Add new user (generate new ID)
+                const newId = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
+                users.push({ id: newId, fullName, email, password });
             }
 
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
+            renderUserTable(users);
+            closeModal();
         }
 
-        // Mobile menu toggle (hidden in HTML but added here for completeness)
-        const mobileMenuBtn = document.createElement('button');
-        mobileMenuBtn.className = 'md:hidden fixed top-4 left-4 z-50 p-2 bg-gray-800 text-white rounded-lg';
-        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-        document.body.appendChild(mobileMenuBtn);
+        // Delete user
+        function deleteUser(id) {
+            users = users.filter(user => user.id !== id);
+            renderUserTable(users);
+        }
 
-        mobileMenuBtn.addEventListener('click', function() {
-            sidebar.classList.toggle('active');
-        });
+        // Initialize the dashboard when the page loads
+        window.onload = initDashboard;
     </script>
-
-
-
 </body>
 </html>
